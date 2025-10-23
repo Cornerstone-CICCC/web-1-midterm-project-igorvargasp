@@ -1,14 +1,3 @@
-
-
-const MenuItems = [
-    { name: "About", href: "#" },
-    { name: "Projects", href: "#" },
-    { name: "Skills", href: "#" },
-    { name: "Work Experiences", href: "#" },
-]
-
-
-
 const Profile = () => {
     return (
         <div className="flex flex-col md:my-20 my-6 w-full md:items-center items-start pl-2">
@@ -21,12 +10,12 @@ const Profile = () => {
     )
 }
 
-const Sidebar = () => {
+const Sidebar = ({ setCurrentMenu, menuItems }: { setCurrentMenu: React.Dispatch<React.SetStateAction<string>>, menuItems: MenuItem[] }) => {
     return (
         <div className="flex flex-col md:my-20 my-6 w-full md:items-center items-start pl-2">
             <ul className="flex flex-col gap-4">
-                {MenuItems.map((item, index) => (
-                    <li key={index} className="text-gray-400 text-xl font-bold hover:text-white">
+                {menuItems.map((item, index) => (
+                    <li key={index} className="text-gray-400 text-xl font-bold hover:text-white" onClick={() => setCurrentMenu(item.name)}>
                         <a href={item.href} className="block py-2 ">{item.name}</a>
                     </li>
                 ))}
@@ -36,12 +25,17 @@ const Sidebar = () => {
 }
 
 
+type MenuItem = {
+    name: string;
+    href?: string;
+    component?: () => React.ReactNode;
+}
 
-export const Menu = ({ isMobile }: { isMobile?: boolean }) => {
+export const Menu = ({ isMobile, setCurrentMenu, menuItems }: { isMobile?: boolean, setCurrentMenu: React.Dispatch<React.SetStateAction<string>>, menuItems: MenuItem[] }) => {
     return (
         <div className={`${isMobile ? "flex flex-col w-full items-start h-auto" : "w-1/5 flex-col items-center h-full hidden md:flex"}`}>
             <Profile />
-            <Sidebar />
+            <Sidebar setCurrentMenu={setCurrentMenu} menuItems={menuItems} />
         </div>
     )
 }
