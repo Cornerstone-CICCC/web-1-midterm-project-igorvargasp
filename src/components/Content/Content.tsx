@@ -38,8 +38,19 @@ export const Overlay: React.FC<OverlayProps> = ({ isOpen, onClose, children }) =
 };
 
 
+type MenuItem = {
+    name: string;
+    href?: string;
+    component?: () => React.ReactNode;
+}
 
-export const Content = () => {
+
+const RenderContent = ({ currentMenu, menuItems }: { currentMenu: string, menuItems: MenuItem[] }) => {
+    return menuItems.find(item => item.name === currentMenu)?.component?.() || null
+}
+
+
+export const Content = ({ currentMenu, setCurrentMenu, menuItems }: { currentMenu: string, setCurrentMenu: React.Dispatch<React.SetStateAction<string>>, menuItems: MenuItem[] }) => {
     const [isHamburguerOpen, setIsHamburguerOpen] = React.useState(false);
 
     return (
@@ -47,9 +58,9 @@ export const Content = () => {
             <div className="w-full h-full flex flex-col bg-secondary rounded-3xl pl-2 pt-2">
                 <Hamburguer className="cursor-pointer md:hidden" onClik={() => setIsHamburguerOpen(!isHamburguerOpen)} />
                 <Overlay isOpen={isHamburguerOpen} onClose={() => setIsHamburguerOpen(false)}>
-                    <Menu isMobile={isHamburguerOpen} />
+                    <Menu isMobile={isHamburguerOpen} setCurrentMenu={setCurrentMenu} menuItems={menuItems} />
                 </Overlay>
-
+                {<RenderContent currentMenu={currentMenu} menuItems={menuItems} />}
             </div>
         </div>
     )
