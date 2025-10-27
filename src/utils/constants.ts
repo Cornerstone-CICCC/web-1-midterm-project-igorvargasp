@@ -1,4 +1,13 @@
+import { IoLogoLinkedin, IoLogoTwitter } from "react-icons/io5";
+import { BiLogoGmail } from "react-icons/bi";
+import { BsGithub } from "react-icons/bs";
 
+export const socials = [
+    { icon: BiLogoGmail, link: "mailto:igorvargasp2@gmail.com" },
+    { icon: IoLogoLinkedin, link: "https://www.linkedin.com/in/igorvargasp/" },
+    { icon: IoLogoTwitter, link: "https://twitter.com/igorvargasp" },
+    { icon: BsGithub, link: "https://github.com/igorvargasp" },
+]
 
 
 export const text = {
